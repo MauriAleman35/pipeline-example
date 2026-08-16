@@ -97,3 +97,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 # pipeline-example
+
+## CI/CD Pipeline & Branching Strategy (Laboratorio 2)
+
+Este proyecto cuenta con un flujo de **Integración Continua (CI)** configurado en GitHub Actions:
+
+- **Estrategia de Branching**: Todo desarrollo se realiza en ramas de funcionalidad (`feature/*`).
+- **Control de Calidad (PR)**: Los cambios se integran a la rama `main` mediante **Pull Requests**.
+- **Validación Automática**: Cada `push` en ramas `feature/*` y la apertura de **Pull Requests** hacia `main` ejecutan automáticamente los chequeos definidos en `.github/workflows/ci.yml`.
+
