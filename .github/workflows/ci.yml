@@ -22,10 +22,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Instalación de dependencias
-        run: npm ci
+        run: npm install
 
       - name: Etapa 1: Compilación (Build)
         run: npm run build
