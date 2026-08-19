@@ -1,4 +1,4 @@
-name: Primer Pipeline CI
+name: CI Pipeline con Pruebas Automatizadas
 
 on:
   push:
@@ -10,34 +10,31 @@ on:
       - main
 
 jobs:
-  hello-ci:
-    name: Hello CI
+  build-and-test:
+    name: Build & Unit Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Mostrar información del entorno
-        run: |
-          echo "================================"
-          echo "      PRIMER PIPELINE CI"
-          echo "================================"
-          echo "Repositorio: ${{ github.repository }}"
-          echo "Rama: ${{ github.ref_name }}"
-          echo "Commit: ${{ github.sha }}"
-          echo "================================"
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Mostrar fecha y hora
-        run: date
+      - name: Instalación de dependencias
+        run: npm install
 
-      - name: Mostrar versión de Git
-        run: git --version
+      - name: Etapa 1: Compilación (Build)
+        run: npm run build
 
-      - name: Simular paso fallido (Laboratorio 2)
-        run: |
-          echo "Simulando error a propósito..."
-          exit 1
+      - name: Etapa 2: Pruebas Unitarias y Cobertura (Quality Gate)
+        run: npm run test:cov
 
-      - name: Finalizar pipeline
-        run: echo "Pipeline ejecutado correctamente."
+      - name: Etapa 3: Publicar Reporte de Cobertura como Artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
